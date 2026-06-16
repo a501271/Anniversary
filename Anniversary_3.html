@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our 1-Year Journey ❤️</title>
+    <style>
+        :root {
+            --primary-color: #ff6b81;
+            --secondary-color: #f8a5c2;
+            --background-color: #fff5f7;
+            --text-color: #4a4a4a;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            background: var(--card-bg);
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 107, 129, 0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 620px;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 25px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background-color: #ffeef2;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--primary-color);
+            transition: width 0.4s ease;
+        }
+
+        .content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-grow: 1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .welcome-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .welcome-text {
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+        }
+
+        .quiz-img-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-img {
+            width: 100%;
+            max-height: 240px;
+            object-fit: contain;
+            border-radius: 15px;
+            border: 3px solid #ffeef2;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+        }
+
+        .proof-label {
+            align-self: center;
+            background: #ffecf0;
+            color: var(--primary-color);
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-top: -5px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background-color: #fff;
+            border: 2px solid #f0f0f0;
+            padding: 15px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-align: left;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .option-btn:hover {
+            border-color: var(--secondary-color);
+            background-color: #fffbfd;
+        }
+
+        .option-btn.correct {
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+            color: #155724;
+        }
+
+        .option-btn.wrong {
+            background-color: #f8d7da !important;
+            border-color: #f5c6cb !important;
+            color: #721c24;
+        }
+
+        .feedback {
+            text-align: center;
+            font-weight: 600;
+            margin-top: 10px;
+            min-height: 24px;
+            font-size: 1.05rem;
+        }
+
+        .feedback.correct-text { color: #28a745; }
+        .feedback.wrong-text { color: #dc3545; }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 107, 129, 0.3);
+            transition: transform 0.2s;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .final-screen {
+            text-align: center;
+        }
+
+        .heart-icon {
+            font-size: 4rem;
+            color: var(--primary-color);
+            animation: heartbeat 1.2s infinite;
+            margin: 20px 0;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            20% { transform: scale(1.1); }
+            40% { transform: scale(1.05); }
+            60% { transform: scale(1.15); }
+            80% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+
+        .love-letter {
+            background-color: #fffbfd;
+            border: 1px dashed var(--secondary-color);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            line-height: 1.6;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        /* Styled class for the final GIF container */
+        .final-gif-container {
+            width: 100%;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .final-gif-img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="header" id="app-header">Loading...</div>
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progress"></div>
+    </div>
+
+    <div class="content">
+        <!-- WELCOME SCREEN -->
+        <div class="screen active" id="welcome-screen">
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1;">
+                <div class="heart-icon">❤️</div>
+                <h1 class="welcome-title" id="welcome-title-text">Happy 1 Year!</h1>
+                <p class="welcome-text" id="welcome-body-text">Loading introduction...</p>
+            </div>
+            <button class="btn-primary" onclick="startQuiz()">Let's Play!</button>
+        </div>
+
+        <!-- QUIZ SCREEN -->
+        <div class="screen" id="quiz-screen">
+            <div>
+                <div class="quiz-img-container">
+                    <!-- Question Image (Shown right away) -->
+                    <img id="question-image" class="quiz-img" src="" alt="Question Clue">
+                    
+                    <!-- Proof Label & Image (Hidden until answered) -->
+                    <span id="proof-label" class="proof-label" style="display: none;">✨ Memory Unlocked! ✨</span>
+                    <img id="proof-image" class="quiz-img" src="" alt="Memory Proof" style="display: none;">
+                </div>
+                
+                <div id="question-text" class="question-text">Question text goes here?</div>
+                <div id="options-container" class="options-container"></div>
+            </div>
+            <div>
+                <div id="feedback" class="feedback"></div>
+                <button id="next-btn" class="btn-primary" style="margin-top: 15px; display: none;" onclick="nextQuestion()">Next Memory ✨</button>
+            </div>
+        </div>
+
+        <!-- FINAL SCREEN -->
+        <div class="screen final-screen" id="final-screen">
+            <div class="heart-icon">💖</div>
+            <h2 class="welcome-title" style="margin-bottom: 10px;">Quiz Completed!</h2>
+            <p style="font-weight: 600; color: var(--primary-color);" id="score-text"></p>
+            <div class="love-letter" id="love-letter-text">
+                <!-- Dynamic love letter content loads here -->
+            </div>
+            <!-- Container where the final GIF will be loaded underneath the letter -->
+            <div class="final-gif-container" id="final-gif-box" style="display: none;">
+                <img id="final-gif-image" class="final-gif-img" src="" alt="Our Anniversary GIF">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /***************************************************************************
+     * 📝 EDITABLE CONFIGURATION SECTION
+     ***************************************************************************/
+    const APP_CONFIG = {
+        appTitle: "Our 1-Year Anniversary Memory Lane",
+        welcomeTitle: "Happy 1 Year!",
+        welcomeMessage: "Hey Damian! Let's take a little trip down memory lane. I've built this quiz to see how well you remember some of our funniest, cutest, and most special moments over the past year. Ready?",
+        
+        // 🎞️ CHANGE YOUR FINAL GIF FILENAME HERE:
+        finalGif: "final_celebration.gif", 
+
+        loveLetterHTML: `
+            <p><strong>Dearest Mr. Tarasewicz/ zabciu/ jajatko,</strong></p><br>
+            <p>Happy one-year anniversary! Thank you for being my sunshine from Copenhagen and for being crazy enough to start this difficult long-distance relationship with me.</p><br>
+            <p>Thank you for all the shit we talk, the random scenario analyses, the morning calls, the bedtime stories, the food you make, and for sharing your life with me. Thank you for making me laugh every single day and for filling this past year with so much love, happiness, and chaos (mostly the good kind).</p><br>
+            <p>I feel so lucky to have found someone I can love, annoy, and grow with. We've been to so many places this year and made so many memories together, memories I never thought I'd get to have in my life.</p><br>
+            <p>Even though you're annoying sometimes, and somehow still don't understand that people should shower before going to bed, you're still the best thing that has ever happened to me and the best gift I've ever received. ❤️</p><br>
+            <p>Every screenshot here is a little memory. I love reading our old messages because they take me right back to how I felt at that moment. Sweet or sour, they're all ours.</p><br>
+            <p>There are actually way more screenshots, but we talk WAY too much shit. I only got through the first couple of months before giving up. That's how much shit we've managed to produce in one year. 😂</p><br>
+            <p>I can't wait for more random lists, more inside jokes, more trips, more memories, and more years of annoying each other.</p><br>
+            <p>Love you babe! ❤️</p>
+        `
+    };
+
+    // 🕹️ EDIT YOUR QUESTIONS, OPTIONS, AND IMAGES HERE:
+    const quizData = [
+        {
+            question: "What is our story behind this place?",
+            questionImage: "image_1.png", 
+            proofImage: "image_1_1.png",    
+            options: ["Where we got lost walking", "The first message you sent me", "A random place you wanted to visit", "Where I lost my phone"],
+            correct: 1, 
+            hint: "Look closely at the winery pin! It's connected to how our conversations first bloomed."
+        },
+        {
+            question: "What is the specialty of this GIF?",
+            questionImage: "image_2.gif", 
+            proofImage: "image_2_2.png",       
+            options: ["It's from your favorite film", "It was sent by accident", "It's our first GIF", "It represents your morning energy"],
+            correct: 2,
+            hint: "Rise and shine! This marked the very first moving picture memory we shared."
+        },
+        {
+            question: "Who is Jacob?",
+            questionImage: "image_3.png", 
+            proofImage: "image_3_3.png",         
+            options: ["Your table", "My cactus", "My stuffed animal", "Your bike"],
+            correct: 1,
+            hint: "He hangs out on the window sill in a festive orange pot!"
+        },
+        {
+            question: "What did you ask me to dress up in Tivoli?",
+            questionImage: "image_4.png", 
+            proofImage: "image_4_4.png",         
+            options: ["A giant egg", "A windmill", "A cheer leader", "A cat"],
+            correct: 1,
+            hint: "Think windy, structural, and uniquely Dutch!"
+        },
+        {
+            question: "What promises haven't you paid back yet?",
+            questionImage: "image_5.png", 
+            proofImage: "image_5_5.png",          
+            options: ["The Switzerland dinner", "Dress up like an egg", "The Stockholm list", "The Croatia list"],
+            correct: 1,
+            hint: "You mentioned it was 'in progress' right after bragging about the Stockholm list!"
+        },
+        {
+            question: "What is the first scenario analysis you ran for me?",
+            questionImage: "image_6.png",  
+            proofImage: "image_6_6.png",          
+            options: ["Buy the ticket or wait", "Shower today or tomorrow", "Stay in or go out tonight", "Sleep early or text back later"],
+            correct: 1,
+            hint: "A highly professional, data-backed analysis regarding nighttime hygiene routines!"
+        },
+        {
+            question: "And how did I pay for that premium scenario analysis package?",
+            questionImage: "image_7.png",    
+            proofImage: "image_7_7.png",          
+            options: ["A cup of hot chocolate", "A kiss", "Two thumbs and one hug", "A handwritten letter"],
+            correct: 2,
+            hint: "You negotiated the price up from just a single thumb up!"
+        },
+        {
+            question: "What is the first dish you ever made for me?",
+            questionImage: "image_8.png",    
+            proofImage: "image_8_8.png",          
+            options: ["dan bing", "Duck and apple", "Homemade pasta", "Fish"],
+            correct: 1,
+            hint: "A delicious, sophisticated combination of savory poultry and crisp orchard fruit."
+        },
+        {
+            question: "When was our very first morning call?",
+            questionImage: "image_9.png",    
+            proofImage: "image_9_9.png",          
+            options: ["Oct 7", "Oct 30", "Nov 01", "Oct 25"],
+            correct: 1,
+            hint: "A crisp late-autumn morning call context!"
+        },
+        {
+            question: "What is the flavor of this cake?",
+            questionImage: "image_10.png",       
+            proofImage: "image_10_10.png",          
+            options: ["Rich Chocolate Fudge", "Damians love", "Carrot", "Lemon Zest Chiffon"], 
+            correct: 1,                         
+            hint: "Think back to how sweet it tasted!"
+        }
+    ];
+
+    /***************************************************************************
+     * ⚙️ CORE ENGINE CODE
+     ***************************************************************************/
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let answered = false;
+
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById('app-header').innerText = APP_CONFIG.appTitle;
+        document.getElementById('welcome-title-text').innerText = APP_CONFIG.welcomeTitle;
+        document.getElementById('welcome-body-text').innerText = APP_CONFIG.welcomeMessage;
+        document.getElementById('love-letter-text').innerHTML = APP_CONFIG.loveLetterHTML;
+    });
+
+    function startQuiz() {
+        document.getElementById('welcome-screen').classList.remove('active');
+        document.getElementById('quiz-screen').classList.add('active');
+        showQuestion();
+    }
+
+    function showQuestion() {
+        answered = false;
+        document.getElementById('next-btn').style.display = 'none';
+        document.getElementById('feedback').className = 'feedback';
+        document.getElementById('feedback').innerText = '';
+        
+        document.getElementById('proof-label').style.display = 'none';
+        document.getElementById('proof-image').style.display = 'none';
+
+        const currentQuestion = quizData[currentQuestionIndex];
+        document.getElementById('app-header').innerText = `Memory ${currentQuestionIndex + 1} of ${quizData.length}`;
+        
+        const progressPercent = ((currentQuestionIndex) / quizData.length) * 100;
+        document.getElementById('progress').style.width = `${progressPercent}%`;
+
+        document.getElementById('question-text').innerText = currentQuestion.question;
+
+        const qImg = document.getElementById('question-image');
+        if (currentQuestion.questionImage && currentQuestion.questionImage !== "") {
+            qImg.src = currentQuestion.questionImage;
+            qImg.style.display = 'block';
+        } else {
+            qImg.style.display = 'none';
+        }
+
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+
+        currentQuestion.options.forEach((option, index) => {
+            const button = document.createElement('button');
+            button.className = 'option-btn';
+            button.innerText = option;
+            button.onclick = () => selectOption(index, button);
+            optionsContainer.appendChild(button);
+        });
+    }
+
+    function selectOption(selectedIndex, selectedButton) {
+        if (answered) return;
+        answered = true;
+
+        const currentQuestion = quizData[currentQuestionIndex];
+        const buttons = document.querySelectorAll('.option-btn');
+        const feedbackEl = document.getElementById('feedback');
+
+        if (currentQuestion.proofImage && currentQuestion.proofImage !== "") {
+            document.getElementById('proof-image').src = currentQuestion.proofImage;
+            document.getElementById('proof-image').style.display = 'block';
+            document.getElementById('proof-label').style.display = 'block';
+        }
+
+        if (selectedIndex === currentQuestion.correct) {
+            selectedButton.classList.add('correct');
+            feedbackEl.innerText = "Correct! You remember! 🥰";
+            feedbackEl.classList.add('correct-text');
+            score++;
+        } else {
+            selectedButton.classList.add('wrong');
+            buttons[currentQuestion.correct].classList.add('correct');
+            feedbackEl.innerText = `Oops! Hint: ${currentQuestion.hint}`;
+            feedbackEl.classList.add('wrong-text');
+        }
+
+        document.getElementById('next-btn').style.display = 'block';
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.length) {
+            showQuestion();
+        } else {
+            showFinalScreen();
+        }
+    }
+
+    function showFinalScreen() {
+        document.getElementById('quiz-screen').classList.remove('active');
+        document.getElementById('final-screen').classList.add('active');
+        document.getElementById('progress').style.width = '100%';
+        document.getElementById('app-header').innerText = "Happy Anniversary! ❤️";
+        document.getElementById('score-text').innerText = `You got ${score} out of ${quizData.length} memories correct!`;
+        
+        // Handle loading the final GIF if it is specified
+        if (APP_CONFIG.finalGif && APP_CONFIG.finalGif !== "") {
+            const gifImg = document.getElementById('final-gif-image');
+            const gifBox = document.getElementById('final-gif-box');
+            gifImg.src = APP_CONFIG.finalGif;
+            gifBox.style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+</html>
